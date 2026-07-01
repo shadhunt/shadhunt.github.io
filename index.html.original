@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShaoYun — Game Maker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-logo">SY</span>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Game Maker</p>
+      <h1 class="hero-name">ShaoYun</h1>
+      <p class="hero-tagline">Crafting worlds, one frame at a time.</p>
+    </div>
+    <div class="hero-scroll-hint">↓</div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="images/placeholder-1.jpg" alt="Project One" class="card-img" />
+          <div class="card-overlay">
+            <span>View Project</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Project One</h3>
+          <p class="card-desc">A brief description of this game or project — genre, platform, your role.</p>
+          <span class="card-tag">Slot / Mobile</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="images/placeholder-2.jpg" alt="Project Two" class="card-img" />
+          <div class="card-overlay">
+            <span>View Project</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Project Two</h3>
+          <p class="card-desc">A brief description of this game or project — genre, platform, your role.</p>
+          <span class="card-tag">Arcade / Desktop</span>
+        </div>
+      </article>
+
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+<section class="about about--cinematic" id="about">
+  <div class="about-bg"></div>
+
+  <div class="about-content">
+    <h2 class="section-title">About</h2>
+    <p>I'm ShaoYun — a game maker focused on crafting immersive, visually compelling experiences. With a background spanning slot mechanics, terminal gaming, and interactive design, I bring both technical precision and artistic sensibility to every project.
+
+    I care deeply about the details: the weight of an animation, the rhythm of a sound effect, the story a single frame can tell.
+    </p>
+    <ul class="skills">
+      ...
+    </ul>
+  </div>
+</section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="contact-wrap">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="contact-sub">Open to collaborations, freelance work, and interesting conversations.</p>
+      <a href="mailto:your@email.com" class="btn">Say Hello</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© 2026 ShaoYun</span>
+    <span>Game Maker</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="{{ '/' | relative_url }}" class="nav-logo">SY</a>
+    <ul class="nav-links">
+      <li><a href="{{ '/' | relative_url }}#work">Work</a></li>
+      <li><a href="{{ '/' | relative_url }}#about">About</a></li>
+      <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+      <li><a href="{{ '/' | relative_url }}#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  {{ content }}
+
+  <footer class="footer">
+    <span>© 2026 ShaoYun</span>
+    <span>Game Maker</span>
+  </footer>
+
+  <script src="{{ '/script.js' | relative_url }}"></script>
+</body>
+</html>

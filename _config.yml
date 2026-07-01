@@ -1,0 +1,13 @@
+title: ShaoYun — Game Maker
+description: Game maker portfolio and blog
+baseurl: ""
+url: "https://shadhunt.github.io"
+permalink: /blog/:year/:month/:day/:title/
+markdown: kramdown
+timezone: America/New_York
+future: true
+
+# Local-only authoring tools — kept in the repo but never built into the
+# published site.
+exclude:
+  - blog/new-post.html

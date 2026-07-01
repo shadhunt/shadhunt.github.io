@@ -1,0 +1,95 @@
+---
+layout: default
+title: ShaoYun — Game Maker
+---
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Game Maker</p>
+      <h1 class="hero-name">ShaoYun</h1>
+      <p class="hero-tagline">Crafting worlds, one frame at a time.</p>
+    </div>
+    <div class="hero-scroll-hint">↓</div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="images/project-1.png" alt="Project One" class="card-img" />
+          <div class="card-overlay">
+            <span>View Project</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Project One</h3>
+          <p class="card-desc">A brief description of this game or project — genre, platform, your role.</p>
+          <span class="card-tag">Slot / Mobile</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="images/project-2.jpg" alt="Project Two" class="card-img" />
+          <div class="card-overlay">
+            <span>View Project</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Project Two</h3>
+          <p class="card-desc">A minimalist coin-operated arcade device that turns every play into a tactile, retro experience.</p>
+          <span class="card-tag">Arcade / Desktop</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- RECENT POSTS -->
+  {% if site.posts.size > 0 %}
+  <section class="section section--alt" id="blog-preview">
+    <h2 class="section-title">Recent Posts</h2>
+    <div class="blog-list">
+      {% for post in site.posts limit:5 %}
+      <a href="{{ post.url | relative_url }}" class="blog-card">
+        <p class="blog-card-date">{{ post.date | date: "%B %d, %Y" }}</p>
+        <h3 class="blog-card-title">{{ post.title }}</h3>
+        <p class="blog-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+      </a>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 2.5rem;">
+      <a href="{{ '/blog/' | relative_url }}" class="btn">All Posts</a>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ABOUT -->
+  <section class="about about--cinematic" id="about">
+    <div class="about-bg"></div>
+    <div class="about-content">
+      <h2 class="section-title">About Me</h2>
+      <p>I'm ShaoYun — a game maker exploring the intersection of gameplay, atmosphere, and cinematic storytelling.
+
+With a background in software engineering and visual production, I approach games as crafted experiences — where systems, timing, sound, and image work together to shape how a moment feels.
+
+I'm especially drawn to the spirit of 90s games — their clarity, challenge, and immediacy. My work aims to revisit that era, not by imitation, but by reinterpreting its core energy for today's players.
+      </p>
+      <ul class="skills">
+        ...
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="contact-wrap">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="contact-sub">Open to collaborations, freelance work, and interesting conversations.</p>
+      <a href="mailto:your@email.com" class="btn">Say Hello</a>
+    </div>
+  </section>

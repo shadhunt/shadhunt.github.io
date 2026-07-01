@@ -1,0 +1,46 @@
+---
+layout: default
+title: Blog — ShaoYun
+---
+
+<section class="section" id="blog">
+  <h2 class="section-title">Blog</h2>
+
+  {% if site.posts.size == 0 %}
+  <p style="color: var(--muted);">No posts yet — check back soon.</p>
+  {% else %}
+  {% assign archive_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+  {% assign archive_groups = archive_groups | sort: "name" | reverse %}
+  <div class="blog-layout">
+    <div class="blog-main">
+      {% for group in archive_groups %}
+      {% assign month_date = group.name | append: "-01" %}
+      <h3 id="archive-{{ group.name }}" class="blog-month-heading">{{ month_date | date: "%B %Y" }}</h3>
+      <div class="blog-list">
+        {% for post in group.items %}
+        <a href="{{ post.url | relative_url }}" class="blog-card">
+          <p class="blog-card-date">{{ post.date | date: "%B %d, %Y" }}</p>
+          <h3 class="blog-card-title">{{ post.title }}</h3>
+          <p class="blog-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          {% if post.tags.size > 0 %}
+          <div class="post-tags">
+            {% for tag in post.tags %}<span class="card-tag">{{ tag }}</span>{% endfor %}
+          </div>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <aside class="blog-archive">
+      <h3 class="blog-archive-title">Archive</h3>
+      <ul class="blog-archive-list">
+        {% for group in archive_groups %}
+        {% assign month_date = group.name | append: "-01" %}
+        <li><a href="#archive-{{ group.name }}">{{ month_date | date: "%B %Y" }} <span class="archive-count">({{ group.items.size }})</span></a></li>
+        {% endfor %}
+      </ul>
+    </aside>
+  </div>
+  {% endif %}
+</section>
