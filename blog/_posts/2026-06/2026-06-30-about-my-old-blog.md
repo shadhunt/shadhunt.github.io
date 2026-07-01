@@ -22,7 +22,7 @@ I will call it Olde Blog with the a faux-archaic spelling of "old" used to evoke
 ![Old Blog 1](/blog/images/20260630/bccn-blog-screen1.png)
 ![Old Blog 2](/blog/images/20260630/bccn-blog-screen2.png) ![Old Blog 3](/blog/images/20260630/bccn-blog-screen3.png)
 ![Old Blog 4](/blog/images/20260630/bccn-blog-screen4.png)
-
+![Old Blog 5](/blog/images/20260630/bccn-blog-screen5.png)
 The screenshots show the posts was on 2006 was because 2006-06-10 was the time the platform did a data transmission, so I lost all my previous posts. In fact, I started blogging in the summer of 2005.
 
 ## My Old Blog
