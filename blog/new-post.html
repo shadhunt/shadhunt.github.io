@@ -31,7 +31,7 @@
     margin-bottom: .35rem;
     margin-top: 1.25rem;
   }
-  input[type="text"], input[type="datetime-local"], textarea {
+  input[type="text"], input[type="datetime-local"], select, textarea {
     width: 100%;
     background: var(--panel);
     border: 1px solid var(--border);
@@ -94,6 +94,13 @@
       <input type="datetime-local" id="date" step="1" />
     </div>
     <div>
+      <label for="timezone" title="Switching timezone resets the posting time to now in that zone">Timezone</label>
+      <select id="timezone">
+        <option value="America/New_York" selected>New York (EST/EDT)</option>
+        <option value="Asia/Shanghai">Beijing (CST)</option>
+      </select>
+    </div>
+    <div>
       <label for="tags">Tags (comma separated)</label>
       <input type="text" id="tags" placeholder="personal, gamedev" />
     </div>
@@ -110,6 +117,9 @@
   <div class="note">
     The filename uses only the first word of the title (cut at the first comma, period, or space), e.g.
     “My Great Day, Today” → <code>my</code>. The full title is still kept in the post's front matter.<br /><br />
+    Posting time defaults to “now” in the selected timezone (New York by default) and is written to the
+    front matter with the correct UTC offset for that zone, including New York's daylight saving
+    changes.<br /><br />
     Posts are grouped into year-month subfolders (e.g. <code>blog/_posts/2026-06/</code>) — Jekyll reads
     posts recursively, so this doesn't affect the published URL.<br /><br />
     On browsers that support it (Chrome/Edge), clicking “Save Post” opens a save dialog — navigate to the
@@ -122,6 +132,7 @@
 <script>
   const titleEl = document.getElementById('title');
   const dateEl = document.getElementById('date');
+  const timezoneEl = document.getElementById('timezone');
   const tagsEl = document.getElementById('tags');
   const contentEl = document.getElementById('content');
   const previewEl = document.getElementById('filenamePreview');
@@ -129,11 +140,45 @@
 
   function pad(n) { return n.toString().padStart(2, '0'); }
 
+  // Reads the wall-clock date/time an Intl formatter reports for a given
+  // instant in a given IANA timezone.
+  function zonedParts(instant, timeZone) {
+    const dtf = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+    });
+    const parts = Object.fromEntries(dtf.formatToParts(instant).map(p => [p.type, p.value]));
+    return {
+      year: +parts.year, month: +parts.month, day: +parts.day,
+      hour: +parts.hour, minute: +parts.minute, second: +parts.second,
+    };
+  }
+
+  // Offset (minutes, positive = east of UTC) that `timeZone` is at for the
+  // instant `utcInstant` represents.
+  function offsetMinutesAt(utcInstant, timeZone) {
+    const p = zonedParts(utcInstant, timeZone);
+    const asUTC = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+    return (asUTC - utcInstant.getTime()) / 60000;
+  }
+
+  // Given a wall-clock date/time meant to be read *in* `timeZone`, find the
+  // UTC offset that applies at that moment (handles DST correctly).
+  function offsetForWallTime(year, month, day, hour, minute, second, timeZone) {
+    const guess = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+    const offset1 = offsetMinutesAt(guess, timeZone);
+    const instant = new Date(guess.getTime() - offset1 * 60000);
+    return offsetMinutesAt(instant, timeZone);
+  }
+
   function setDefaultDate() {
-    const now = new Date();
-    dateEl.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const now = zonedParts(new Date(), timezoneEl.value);
+    dateEl.value = `${now.year}-${pad(now.month)}-${pad(now.day)}T${pad(now.hour)}:${pad(now.minute)}:${pad(now.second)}`;
   }
   setDefaultDate();
+  timezoneEl.addEventListener('change', setDefaultDate);
 
   function slugify(text) {
     return text
@@ -151,7 +196,8 @@
   }
 
   function readDateParts() {
-    // dateEl.value is "YYYY-MM-DDTHH:MM:SS" in the input's own local time
+    // dateEl.value is "YYYY-MM-DDTHH:MM:SS", read as wall-clock time in the
+    // selected timezone (not the browser's own timezone).
     const [datePart, timePart] = dateEl.value.split('T');
     const [year, month, day] = datePart.split('-').map(Number);
     const [hour, minute, second] = (timePart || '00:00:00').split(':').map(Number);
@@ -160,10 +206,9 @@
 
   function formatFrontMatterDate() {
     const { year, month, day, hour, minute, second } = readDateParts();
-    // Build the date as a local Date so the timezone offset (incl. DST) is
-    // correct for that specific day, not just "right now".
-    const d = new Date(year, month - 1, day, hour, minute, second);
-    const offsetMin = -d.getTimezoneOffset();
+    // Offset for the chosen timezone at this exact date (handles NY's DST;
+    // Beijing has none, so it's always +0800).
+    const offsetMin = offsetForWallTime(year, month, day, hour, minute, second, timezoneEl.value);
     const sign = offsetMin >= 0 ? '+' : '-';
     const abs = Math.abs(offsetMin);
     const offset = `${sign}${pad(Math.floor(abs / 60))}${pad(abs % 60)}`;
